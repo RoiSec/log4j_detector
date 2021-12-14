@@ -15,9 +15,15 @@ else
         echo "Found java System property!"
 fi
 }
-check_variables
 
-    # for containerId in $(docker ps -q)
-    # do
-    #     docker exec -it $containerId bash -c 'cd /var/www/html && git pull'
-    # done
+check_container () {
+    for containerId in $(docker ps -q)
+    do
+        echo "Image Name:" ;docker ps  -f "id=$containerId" | awk '{print $2}' | grep /
+        docker exec -it $containerId sh -c 'wget -qO - https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh | sh'
+    done
+}
+
+if  docker info > /dev/null 2>&1; then
+    check_container
+fi
