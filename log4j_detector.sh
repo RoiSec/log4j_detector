@@ -15,7 +15,9 @@ else
         echo "Found java System property!"
 fi
 }
-
+echo "Host Checking:"
+check_variables
+echo "Checking Containers:"
 check_container () {
     for containerId in $(docker ps -q)
     do
@@ -27,4 +29,3 @@ check_container () {
 if  docker info > /dev/null 2>&1; then
     check_container
 fi
-check_variables
