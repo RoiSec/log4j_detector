@@ -22,7 +22,6 @@ check_container () {
         docker exec $containerId sh -c 'wget -qO - https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh | sh'
     done
 }
-echo "Host Checking:"
 check_variables
 echo "Checking Containers:"
 if  docker info > /dev/null 2>&1; then
