@@ -1,4 +1,4 @@
-# log4j_detector - One liner script the search if log4j vulerability mitigated
+# log4j_detector - Check if log4j vulerability mitigated
 
 
 2 Options:
