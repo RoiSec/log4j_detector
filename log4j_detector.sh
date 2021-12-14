@@ -23,7 +23,6 @@ check_container () {
     done
 }
 check_variables
-echo "Checking Containers:"
 if  docker info > /dev/null 2>&1; then
     check_container
 fi
