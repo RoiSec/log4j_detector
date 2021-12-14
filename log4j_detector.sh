@@ -1,7 +1,7 @@
 #!/bin/bash
 check_variables () {
 if [ -z ${LOG4J_FORMAT_MSG_NO_LOOKUPS} ]; then
-  echo "No Enviroment Variable Found"
+  echo "Not Enviroment Variable Found"
 else
   echo "LOG4J_FORMAT_MSG_NO_LOOKUPS enviroment variable found!"
 fi
