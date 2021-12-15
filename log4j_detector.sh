@@ -25,11 +25,10 @@ check_container () {
     for containerId in $(docker ps -q)
     do
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
-        docker exec $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh'
+        docker exec $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
         docker exec $containerId sh -c 'chmod +x log4j_detector.sh'
         jar_paths=$@
         cmd="./log4j_detector.sh ${jar_paths}"
-        echo $cmd
         docker exec $containerId sh -c '$cmd'
         docker exec $containerId sh -c  'rm ./log4j_detector.sh'
     done
