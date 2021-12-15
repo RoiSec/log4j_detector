@@ -20,9 +20,7 @@ check_variables () {
             echo "Found java System property!"
     fi
 }
-if  docker info > /dev/null 2>&1; then
-    check_container "$@"
-fi
+
 check_container () {
     for containerId in $(docker ps -q)
     do
@@ -37,7 +35,9 @@ check_container () {
     done
 }
 check_variables
-
+if  docker info > /dev/null 2>&1; then
+    check_container "$@"
+fi
 check_jar(){
     echo "Checking jars"
     jars_paths=("$@")
