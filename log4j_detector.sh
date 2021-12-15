@@ -29,7 +29,7 @@ check_jar(){
         echo "Jar file exists "
         java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
         grep -i 'Found CVE-2021-44228' out.txt
-        rm ./logpresso-log4j2-scan-1.5.0.jar out.txt
+        # rm ./logpresso-log4j2-scan-1.5.0.jar out.txt
         else
         echo "$FILE File not exists."         
     fi
@@ -43,10 +43,10 @@ check_container () {
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
         docker exec -it $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
         docker exec -it $containerId sh -c 'chmod +x log4j_detector.sh'
-        jar_paths=$@
+        jar_paths=$1
         cmd="./log4j_detector.sh ${jar_paths}"
         echo $cmd
-        docker exec -it $containerId sh -c '$cmd'
+        docker exec -it $containerId sh -c $cmd
         docker exec -it $containerId sh -c  'rm ./log4j_detector.sh'
     done
 }
