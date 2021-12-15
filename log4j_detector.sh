@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 check_variables () {
     if [ -z ${LOG4J_FORMAT_MSG_NO_LOOKUPS} ]; then
@@ -20,13 +20,13 @@ check_container () {
     for containerId in $(docker ps -q)
     do
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
-        docker exec $containerId sh -c 'wget -qO - https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh | sh'
+        docker exec $containerId sh -c 'wget -qO - https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh $@ | sh'
     done
 }
-check_variables
-if  docker info > /dev/null 2>&1; then
-    check_container
-fi
+# check_variables
+# if  docker info > /dev/null 2>&1; then
+#     check_container
+# fi
 check_jar(){
     echo "Checking jars"
     jars_paths=("$@")
