@@ -27,7 +27,8 @@ check_container () {
         docker exec $containerId sh -c 'wget -qO - https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh'
         docker exec $containerId sh -c 'chmod +x log4j_detector.sh'
         echo '$@'
-        docker exec $containerId sh -c './log4j_detector.sh $@'
+        docker exec $containerId sh -c ./log4j_detector.sh $@
+        docker exec $containerId sh -c ./log4j_detector.sh
     done
 }
 # check_variables
