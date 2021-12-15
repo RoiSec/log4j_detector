@@ -22,7 +22,7 @@ check_variables () {
 }
 check_jar(){
     echo "Checking jars"
-    jars_paths="$1"
+    jars_paths=$1
     wget 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' -q
     jar=${jars_paths[$index]}
     FILE=$jar
