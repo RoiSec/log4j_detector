@@ -28,6 +28,24 @@ if  docker info > /dev/null 2>&1; then
     check_container
 fi
 check_jar(){
-    
-
+    echo "checking jars"
+    jars=("$@")
+    wget https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar
+        for index in "${!jars[@]}"
+        do 
+            jar=${jars[$index]}
+            echo $jar
+            FILE=$jar
+            if [ -f "$FILE" ]; then
+                echo "$FILE exists. Scan the jar file"
+                java -jar logpresso-log4j2-scan-1.5.0.jar $FILE
+                else
+                echo "$FILE File not exists."
+                
+            fi
+            
+        
+        done
+    rm ./logpresso-log4j2-scan-1.5.0.jar
 }
+check_jar "$@" #input array from client
