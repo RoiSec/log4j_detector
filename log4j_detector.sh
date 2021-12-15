@@ -1,4 +1,5 @@
 #!/bin/sh
+#ssssssssssfffsss
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied"
@@ -29,11 +30,12 @@ check_jar(){
         echo "Jar file exists "
         rm logpresso-log4j2-scan-1.5.0.jar out.txt
         java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
-        grep -i 'Found CVE-2021-44228' out.txt
+        grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
         rm logpresso-log4j2-scan-1.5.0.jar out.txt
         else
         echo "$FILE File not exists."         
     fi
+    rm logpresso-log4j2-scan-1.5.0.jar 2>/dev/null
 
 }
 
