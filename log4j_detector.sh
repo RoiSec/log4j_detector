@@ -42,12 +42,12 @@ check_container () {
     for containerId in $(docker ps -q)
     do
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
-        docker exec -it $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
-        docker exec -it $containerId sh -c 'chmod +x log4j_detector.sh'
+        docker exec -i $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
+        docker exec -i $containerId sh -c 'chmod +x log4j_detector.sh'
         cmd="./log4j_detector.sh ${jar_paths}"
         # echo $cmd
-        docker exec -it $containerId sh -c "./log4j_detector.sh $jar_paths"
-        docker exec -it $containerId sh -c  'rm ./log4j_detector.sh'
+        docker exec -i $containerId sh -c "./log4j_detector.sh $jar_paths"
+        docker exec -i $containerId sh -c  'rm ./log4j_detector.sh'
     done
 }
 check_variables
