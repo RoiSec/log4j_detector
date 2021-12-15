@@ -29,7 +29,7 @@ check_jar(){
         echo "Jar file exists "
         java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
         grep -i 'Found CVE-2021-44228' out.txt
-        # rm ./logpresso-log4j2-scan-1.5.0.jar out.txt
+        rm ./logpresso-log4j2-scan-1.5.0.jar out.txt
         else
         echo "$FILE File not exists."         
     fi
