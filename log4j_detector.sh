@@ -27,8 +27,8 @@ check_container () {
         docker exec $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh'
         docker exec $containerId sh -c 'chmod +x log4j_detector.sh'
         jar_paths=$@
-        echo 'docker exec ./log4j_detector.sh ${jar_paths}'
-        docker exec $containerId sh -c './log4j_detector.sh ${jar_paths}'
+        echo 'docker exec ./log4j_detector.sh' ${jar_paths}
+        docker exec $containerId sh -c './log4j_detector.sh' ${jar_paths}
         docker exec $containerId sh -c  'rm ./log4j_detector.sh'
     done
 }
