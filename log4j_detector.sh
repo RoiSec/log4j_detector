@@ -1,19 +1,20 @@
 #!/bin/bash
-check_variables () {
-if [ -z ${LOG4J_FORMAT_MSG_NO_LOOKUPS} ]; then
-  echo "Not Enviroment Variable Found"
-else
-  echo "LOG4J_FORMAT_MSG_NO_LOOKUPS enviroment variable found!"
-fi
 
-proc=$(ps -ef | grep java | grep -v grep)
-result=$(ps -ef | grep java | grep -v grep | grep log4j2.formatMsgNoLookups=true | wc -l)
-# echo "Found java procces: " $proc
-if [ $((result)) -eq 0 ]; then
-        echo "Not Found java System property!"
-else
-        echo "Found java System property!"
-fi
+check_variables () {
+    if [ -z ${LOG4J_FORMAT_MSG_NO_LOOKUPS} ]; then
+    echo "Not Enviroment Variable Found!"
+    else
+    echo "LOG4J_FORMAT_MSG_NO_LOOKUPS enviroment variable found!"
+    fi
+
+    proc=$(ps -ef | grep java | grep -v grep)
+    result=$(ps -ef | grep java | grep -v grep | grep log4j2.formatMsgNoLookups=true | wc -l)
+    # echo "Found java procces: " $proc
+    if [ $((result)) -eq 0 ]; then
+            echo "Not Found java System property!"
+    else
+            echo "Found java System property!"
+    fi
 }
 check_container () {
     for containerId in $(docker ps -q)
@@ -26,3 +27,24 @@ check_variables
 if  docker info > /dev/null 2>&1; then
     check_container
 fi
+check_jar(){
+    echo "Checking jars"
+    jars_paths=("$@")
+    wget https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar -q
+        for index in "${!jars_paths[@]}"
+        do 
+            jar=${jars_paths[$index]}
+            FILE=$jar
+            if [ -f "$FILE" ]; then
+                java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt  2>&1
+                else
+                echo "$FILE File not exists."
+                
+            fi
+            
+        
+        done
+    grep -i 'Found CVE-2021-44228' out.txt
+    rm ./logpresso-log4j2-scan-1.5.0.jar out.txt
+}
+check_jar "$@" #array argument from client
