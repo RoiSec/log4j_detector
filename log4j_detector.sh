@@ -40,11 +40,12 @@ check_jar(){
     grep -i 'Found CVE-2021-44228' out.txt
     rm ./logpresso-log4j2-scan-1.5.0.jar out.txt
 }
+
 check_container () {
     for containerId in $(docker ps -q)
     do
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
-        docker exec $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
+        docker exec $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -/'
         docker exec $containerId sh -c 'chmod +x log4j_detector.sh'
         jar_paths=$@
         cmd="./log4j_detector.sh ${jar_paths}"
@@ -53,8 +54,7 @@ check_container () {
     done
 }
 check_variables
-check_jar
+check_jar "$@" #array argument from client
 if  docker info > /dev/null 2>&1; then
     check_container "$@"
 fi
- "$@" #array argument from client
