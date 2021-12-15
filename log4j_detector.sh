@@ -20,23 +20,6 @@ check_variables () {
             echo "Found java System property!"
     fi
 }
-
-check_container () {
-    for containerId in $(docker ps -q)
-    do
-        echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
-        docker exec $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
-        docker exec $containerId sh -c 'chmod +x log4j_detector.sh'
-        jar_paths=$@
-        cmd="./log4j_detector.sh ${jar_paths}"
-        docker exec $containerId sh -c '$cmd'
-        docker exec $containerId sh -c  'rm ./log4j_detector.sh'
-    done
-}
-check_variables
-if  docker info > /dev/null 2>&1; then
-    check_container "$@"
-fi
 check_jar(){
     echo "Checking jars"
     jars_paths=("$@")
@@ -57,4 +40,21 @@ check_jar(){
     grep -i 'Found CVE-2021-44228' out.txt
     rm ./logpresso-log4j2-scan-1.5.0.jar out.txt
 }
-check_jar "$@" #array argument from client
+check_container () {
+    for containerId in $(docker ps -q)
+    do
+        echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
+        docker exec $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
+        docker exec $containerId sh -c 'chmod +x log4j_detector.sh'
+        jar_paths=$@
+        cmd="./log4j_detector.sh ${jar_paths}"
+        docker exec $containerId sh -c '$cmd'
+        docker exec $containerId sh -c  'rm ./log4j_detector.sh'
+    done
+}
+check_variables
+check_jar
+if  docker info > /dev/null 2>&1; then
+    check_container "$@"
+fi
+ "$@" #array argument from client
