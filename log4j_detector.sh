@@ -1,5 +1,5 @@
 #!/bin/sh
-#sssssss
+#ssssssssssss
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied"
