@@ -49,6 +49,7 @@ check_container () {
         docker exec $containerId sh -c 'chmod +x log4j_detector.sh'
         jar_paths=$@
         cmd="./log4j_detector.sh ${jar_paths}"
+        echo $cmd
         docker exec $containerId sh -c '$cmd'
         docker exec $containerId sh -c  'rm ./log4j_detector.sh'
     done
