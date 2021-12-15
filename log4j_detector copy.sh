@@ -22,15 +22,18 @@ check_variables () {
 }
 check_jar(){
     echo "Checking jars"
-    jars_paths=("$1")
+    jars_paths=("$@")
     wget 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' -q
-    jar=${jars_paths[$index]}
-    FILE=$jar
-    if [ -f "$FILE" ]; then
-        java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt  2>&1
-        else
-        echo "$FILE File not exists."         
-    fi
+        for index in "${!jars_paths[@]}"
+        do 
+            jar=${jars_paths[$index]}
+            FILE=$jar
+            if [ -f "$FILE" ]; then
+                java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt  2>&1
+                else
+                echo "$FILE File not exists."
+                
+            fi
             
         
         done
@@ -52,7 +55,7 @@ check_container () {
     done
 }
 check_variables
-check_jar "$1" #array argument from client
+check_jar "$@" #array argument from client
 if  docker info > /dev/null 2>&1; then
-    check_container "$1"
+    check_container "$@"
 fi
