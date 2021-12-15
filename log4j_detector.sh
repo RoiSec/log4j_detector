@@ -7,7 +7,7 @@ if [ $# -eq 0 ]
 fi
 check_variables () {
     if [ -z ${LOG4J_FORMAT_MSG_NO_LOOKUPS} ]; then
-    echo "Not Enviroment Variable Found!"
+    echo "Enviroment Variable Not Found!"
     else
     echo "LOG4J_FORMAT_MSG_NO_LOOKUPS enviroment variable found!"
     fi
@@ -16,9 +16,9 @@ check_variables () {
     result=$(ps -ef | grep java | grep -v grep | grep log4j2.formatMsgNoLookups=true | wc -l)
     # echo "Found java procces: " $proc
     if [ $((result)) -eq 0 ]; then
-            echo "Not Found java System property!"
+            echo "Java Flag Not Found!"
     else
-            echo "Found java System property!"
+            echo "Found Java Flag!"
     fi
 }
 check_jar(){
@@ -26,7 +26,7 @@ check_jar(){
     wget 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' -q
     FILE=$1
     if [ -f "$FILE" ]; then
-        echo "Jar file exists "
+        # echo "Jar file exists "
         java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
         grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
         rm out.txt
