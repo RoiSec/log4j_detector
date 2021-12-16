@@ -40,7 +40,7 @@ check_container () {
     do
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
         docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh' > 'log4j_detector.sh'
-        docker exec -i $containerId sh -c 'chmod +x log4j_detector.sh'
+        docker exec -i $containerId sh -c 'chmod +x ./log4j_detector.sh'
         cmd="./log4j_detector.sh ${jar_paths}"
         # echo $cmd
         docker exec -i $containerId sh -c "./log4j_detector.sh $jar_paths"
