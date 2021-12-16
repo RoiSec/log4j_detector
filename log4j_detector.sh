@@ -32,7 +32,7 @@ check_jar(){
     FILE=$1
     java_path=$(find /usr/ /bin/ -name java -type f -perm /a+x 2>/dev/null | head -n 1)
     # echo $java_path
-    eval $java_path -jar /tmp/logpresso-log4j2-scan-1.6.3.jar $FILE >>/tmp/out.txt 
+    eval $java_path -jar /tmp/logpresso-log4j2-scan-1.6.3.jar $FILE >>/tmp/out.txt 2>/dev/null
     grep -i 'Found CVE-2021-44228' /tmp/out.txt 2>/dev/null
     rm /tmp/out.txt 2>/dev/null
         # else
