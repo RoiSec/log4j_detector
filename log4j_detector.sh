@@ -45,7 +45,7 @@ check_container () {
     jar_paths=$1
     for containerId in $(docker ps -q)
     do
-        echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
+        echo -n "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
         docker exec -i $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q --no-check-certificate -O /tmp/log4j_detector.sh' 2>/dev/null
         docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -o /tmp/log4j_detector.sh' 2>/dev/null
         docker exec -i $containerId sh -c 'chmod +x /tmp/log4j_detector.sh'
