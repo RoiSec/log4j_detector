@@ -33,7 +33,11 @@ check_jar(){
     java_path=$(find /usr/ /bin/ -name java -type f -perm /a+x 2>/dev/null | head -n 1)
     # echo $java_path
     eval $java_path -jar /tmp/logpresso-log4j2-scan-1.6.3.jar $FILE >>/tmp/out.txt 2>/dev/null
-    grep -i 'Found CVE-2021-44228' /tmp/out.txt 2>/dev/null
+    grep -i "Found CVE-2021-44228" /tmp/out.txt 2>/dev/null
+    result=$(grep -i "Found CVE-2021-44228" /tmp/out.txt | wc -l 2>/dev/null)
+    if [ $((result)) -ne 0 ]; then
+            check_variables
+    fi
     rm /tmp/out.txt 2>/dev/null
         # else
         # echo "$FILE File not exists." 
@@ -55,10 +59,10 @@ check_container () {
         echo ""
     done
 }
-
-
-check_variables
 check_jar "$1" #array argument from client
+
+
+
 if  docker info > /dev/null 2>&1; then
     check_container "$1"
 fi
