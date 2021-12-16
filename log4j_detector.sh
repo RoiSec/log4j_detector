@@ -23,7 +23,7 @@ check_variables () {
 }
 check_jar(){
     # echo "Checking jars"
-    curl 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' -o 'logpresso-log4j2-scan-1.5.0.jar'
+    curl -s 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' > 'logpresso-log4j2-scan-1.5.0.jar'
     FILE=$1
     java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
     grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
@@ -39,7 +39,7 @@ check_container () {
     for containerId in $(docker ps -q)
     do
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
-        docker exec -i $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
+        docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh' > 'log4j_detector.sh'
         docker exec -i $containerId sh -c 'chmod +x log4j_detector.sh'
         cmd="./log4j_detector.sh ${jar_paths}"
         # echo $cmd
