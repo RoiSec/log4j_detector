@@ -29,7 +29,8 @@ check_jar(){
         curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -o 'logpresso-log4j2-scan-1.6.3.jar'
     fi
     FILE=$1
-    java -jar logpresso-log4j2-scan-1.6.3.jar $FILE >>out.txt
+    java_path=$(find /usr/ -name java 2>/dev/null | head -n 1)
+    eval $java_path -jar logpresso-log4j2-scan-1.6.3.jar $FILE >>out.txt
     grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
     rm out.txt 2>/dev/null
         # else
