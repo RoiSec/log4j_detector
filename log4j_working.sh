@@ -25,11 +25,14 @@ check_jar(){
     # echo "Checking jars"
     wget 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' -q
     FILE=$1
-    java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
-    grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
-    rm out.txt
+    if [ -f "$FILE" ]; then
+        # echo "Jar file exists "
+        java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
+        grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
+        rm out.txt
         # else
         # echo "$FILE File not exists."         
+    fi
     rm logpresso-log4j2-scan-1.5.0.jar 2>/dev/null
 
 }
