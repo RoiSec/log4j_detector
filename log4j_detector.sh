@@ -22,14 +22,14 @@ check_variables () {
 }
 check_jar(){
     # echo "Checking jars"
-    curl -s -H "Accept: application/zip" 'https://raw.githubusercontent.com/logpresso/CVE-2021-44228-Scanner/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' > 'logpresso-log4j2-scan-1.5.0.jar'
+    curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' > 
     FILE=$1
-    java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
+    java -jar logpresso-log4j2-scan-1.6.3.jar $FILE >>out.txt
     grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
     rm out.txt 2>/dev/null
         # else
         # echo "$FILE File not exists."
-    rm logpresso-log4j2-scan-1.5.0.jar 2>/dev/null
+    rm logpresso-log4j2-scan-1.6.3.jar 2>/dev/null
 
 }
 
