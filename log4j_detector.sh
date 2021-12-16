@@ -53,6 +53,7 @@ check_container () {
         # echo $cmd
         docker exec -i $containerId sh -c "/tmp/log4j_detector.sh $jar_paths"
         docker exec -i $containerId sh -c  'rm /tmp/log4j_detector.sh'
+        echo ""
     done
 }
 check_variables
