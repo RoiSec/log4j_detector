@@ -23,7 +23,7 @@ check_variables () {
 }
 check_jar(){
     # echo "Checking jars"
-    curl 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' -q
+    curl 'https://github.com/logpresso/CVE-2021-44228-Scanner/releases/download/v1.5.0/logpresso-log4j2-scan-1.5.0.jar' -o 'logpresso-log4j2-scan-1.5.0.jar'
     FILE=$1
     java -jar logpresso-log4j2-scan-1.5.0.jar $FILE >>out.txt
     grep -i 'Found CVE-2021-44228' out.txt 2>/dev/null
