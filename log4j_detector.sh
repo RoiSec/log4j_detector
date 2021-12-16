@@ -45,11 +45,10 @@ check_container () {
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
         if ! $(docker exec -i $containerId sh -c 'command -v curl 2>&1 ') &> /dev/null
         then
-            wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -q
+            docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh' > 'log4j_detector.sh'
         else
-            curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -o 'logpresso-log4j2-scan-1.6.3.jar'
+            docker exec -i $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q'
         fi
-        docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh' > 'log4j_detector.sh'
         docker exec -i $containerId sh -c 'chmod +x ./log4j_detector.sh'
         cmd="./log4j_detector.sh ${jar_paths}"
         # echo $cmd
