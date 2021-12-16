@@ -60,5 +60,4 @@ check_variables
 check_jar "$1" #array argument from client
 if  docker info > /dev/null 2>&1; then
     check_container "$1"
-
 fi
