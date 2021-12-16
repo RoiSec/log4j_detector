@@ -22,7 +22,7 @@ check_variables () {
     fi
 }
 check_jar(){
-    # echo "Checking jars"
+    echo "Checking jars"
     if ! command -v curl &> /dev/null
     then
         wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' --no-check-certificate -q -O '/tmp/logpresso-log4j2-scan-1.6.3.jar'
