@@ -24,9 +24,9 @@ check_jar(){
     # echo "Checking jars"
     if ! command -v curl &> /dev/null
     then
-        wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -q 
+        wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -q -O '/tmp/logpresso-log4j2-scan-1.6.3.jar'
     else
-        curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -o 'logpresso-log4j2-scan-1.6.3.jar' 2>/dev/null
+        curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -o '/tmp/logpresso-log4j2-scan-1.6.3.jar' 2>/dev/null
     fi
     FILE=$1
     java_path=$(find /usr/ /bin/ -executable -name java -type f 2>/dev/null | head -n 1)
@@ -45,13 +45,13 @@ check_container () {
     for containerId in $(docker ps -q)
     do
         echo "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
-        docker exec -i $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q' 2>/dev/null
-        docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -o ./log4j_detector.sh' 2>/dev/null
+        docker exec -i $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q -O /tmp/log4j_detector.sh' 2>/dev/null
+        docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -o /tmp/log4j_detector.sh' 2>/dev/null
         docker exec -i $containerId sh -c 'chmod +x ./log4j_detector.sh'
-        cmd="./log4j_detector.sh ${jar_paths}"
+        # cmd="./log4j_detector.sh ${jar_paths}"
         # echo $cmd
-        docker exec -i $containerId sh -c "./log4j_detector.sh $jar_paths"
-        docker exec -i $containerId sh -c  'rm ./log4j_detector.sh'
+        docker exec -i $containerId sh -c "/tmp/log4j_detector.sh $jar_paths"
+        docker exec -i $containerId sh -c  'rm /tmp/log4j_detector.sh'
     done
 }
 check_variables
