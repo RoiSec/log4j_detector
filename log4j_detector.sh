@@ -37,7 +37,7 @@ check_jar(){
     rm /tmp/out.txt 2>/dev/null
         # else
         # echo "$FILE File not exists."
-    rm logpresso-log4j2-scan-1.6.3.jar 2>/dev/null
+    rm /tmp/logpresso-log4j2-scan-1.6.3.jar 2>/dev/null
 
 }
 
