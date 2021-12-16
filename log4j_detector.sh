@@ -25,7 +25,7 @@ check_jar(){
     # echo "Checking jars"
     if ! command -v curl &> /dev/null
     then
-        wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' --no-check-certificate -q -O '/tmp/logpresso-log4j2-scan-1.6.3.jar'
+        wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' --no-check-certificate -q -O '/tmp/logpresso-log4j2-scan-1.6.3.jar' 2>/dev/null
     else
         curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -o '/tmp/logpresso-log4j2-scan-1.6.3.jar' 2>/dev/null
     fi
@@ -45,7 +45,7 @@ check_container () {
     jar_paths=$1
     for containerId in $(docker ps -q)
     do
-        echo -n "Image Name:" ;docker ps  -f "id=$containerId" --format '{{.Image}}'
+        echo -n "Image Name: " ;docker ps  -f "id=$containerId" --format '{{.Image}}'
         docker exec -i $containerId sh -c 'wget https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -q --no-check-certificate -O /tmp/log4j_detector.sh' 2>/dev/null
         docker exec -i $containerId sh -c 'curl -s https://raw.githubusercontent.com/RoiSec/log4j_detector/main/log4j_detector.sh -o /tmp/log4j_detector.sh' 2>/dev/null
         docker exec -i $containerId sh -c 'chmod +x /tmp/log4j_detector.sh'
