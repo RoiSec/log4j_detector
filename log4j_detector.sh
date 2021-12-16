@@ -24,9 +24,9 @@ check_jar(){
     # echo "Checking jars"
     if ! command -v curl &> /dev/null
     then
-        wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -q
+        wget 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -q 2>/dev/null
     else
-        curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -o 'logpresso-log4j2-scan-1.6.3.jar'
+        curl -s 'https://raw.githubusercontent.com/RoiSec/log4j_detector/main/logpresso/logpresso-log4j2-scan-1.6.3.jar' -o 'logpresso-log4j2-scan-1.6.3.jar' 2>/dev/null
     fi
     FILE=$1
     java_path=$(find /usr/ /bin/ -executable -name java -type f 2>/dev/null | head -n 1)
