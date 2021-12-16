@@ -40,7 +40,6 @@ check_jar(){
     rm /tmp/logpresso-log4j2-scan-1.6.3.jar 2>/dev/null
 
 }
-
 check_container () {
     jar_paths=$1
     for containerId in $(docker ps -q)
@@ -56,6 +55,8 @@ check_container () {
         echo ""
     done
 }
+
+
 check_variables
 check_jar "$1" #array argument from client
 if  docker info > /dev/null 2>&1; then
